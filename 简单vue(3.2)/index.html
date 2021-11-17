@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <span id="testComputed"></span>
+</body>
+<!-- util -->
+<script src="./util.js"></script>
+<!-- reactive -->
+<script src="./reactive.js"></script>
+<!-- ref -->
+<script src="./ref.js"></script>
+<!-- computed -->
+<script src="./computed.js">
+</script>
+
+<!-- 测试computed -->
+<script>
+      // let state = reactive({
+      //   x: 100
+      // })
+      // const com1 = computed(()=>{
+      //   return state.x;
+      // })
+
+      // let renderEffect = new ReactiveEffect(render);
+
+      // // 组件渲染函数
+      // function render() {
+      //   // 设置当前激活的为渲染函数
+      //   activeEffect = renderEffect
+      //   console.log('com1: ', com1.value);
+      //   // let testId = document.getElementById('testComputed')
+      //   // testId.innerText = com1.value
+      // }
+
+
+
+      // watchEffect(render)
+
+      // setTimeout(() => {
+      //   state.x = 200
+      // }, 1000)
+
+</script>
+<!-- 测试ref -->
+<script>
+  // const msg = ref('Hello World')
+
+  // let renderEffect = new ReactiveEffect(render);
+
+  // // 组件渲染函数
+  // function render() {
+  //   // 设置当前激活的为渲染函数
+  //   activeEffect = renderEffect
+  //   let testId = document.getElementById('testComputed')
+  //   testId.innerText = msg.value
+  // }
+
+  // watchEffect(render)
+
+  // setTimeout(() => {
+  //   msg.value = '123'
+  // }, 2000)
+</script>
+
+</html>
