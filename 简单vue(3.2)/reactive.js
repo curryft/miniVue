@@ -7,10 +7,23 @@ const reactiveToRaw = new WeakMap()
 // 深度侦测数据
 // 当对多层级的对象操作时，set 并不能感知到，但是 get 会触发，
 // 于此同时，利用 Reflect.get() 返回的“多层级对象中内层” ，再对“内层数据”做一次代理。
-function createGetter() {
+function createGetter(isReadonly = false, shallow = false) {
     return function get(target, key, receiver) {
-        console.log('get');
+        // console.log('target, key: ', target, key);
+        // 在进行一些判断的时候比如isRef 会对一些标示进行get 这时候不需要进行track
+        if (key === "__v_isReactive" /* IS_REACTIVE */) {
+            return !isReadonly;
+        }
+        else if (key === "__v_isReadonly" /* IS_READONLY */) {
+            return isReadonly;
+        }
         const res = Reflect.get(target, key, receiver)
+
+        // Symbol 和  __v_isRef 这些不用收集直接返回
+        if (isSymbol(key) ? builtInSymbols.has(key) : isNonTrackableKeys(key)) {
+            return res;
+        }
+
         // 依赖收集
         track(target, key)
         return isObject(res) ? reactive(res) : res
@@ -19,7 +32,6 @@ function createGetter() {
 
 function createSetter(target, key, val, receiver) {
     return function set(target, key, val, receiver) {
-        console.log(target, key, val)
         const hadKey = hasOwn(target, key)
         const oldValue = target[key]
         // 如果目标的原型链也是一个 proxy，通过 Reflect.set 修改原型链上的属性会再次触发 setter，这种情况下就没必要触发两次 trigger 了
@@ -65,6 +77,7 @@ function createReactiveObject(target, toProxy, toRaw, baseHandlers) {
         return target
     }
     observed = new Proxy(target, baseHandlers)
+    observed['__v_isReactive'] = true
     toProxy.set(target, observed)
     toRaw.set(observed, target)
     return observed

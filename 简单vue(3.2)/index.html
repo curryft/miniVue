@@ -18,6 +18,9 @@
 <!-- computed -->
 <script src="./computed.js">
 </script>
+<!-- watcher -->
+<script src="./watcher.js">
+</script>
 
 <!-- 测试computed -->
 <script>
@@ -67,6 +70,28 @@
   // setTimeout(() => {
   //   msg.value = '123'
   // }, 2000)
+</script>
+
+<!-- 测试watcher -->
+<script>
+  let state = reactive({
+    x: 100
+  })
+
+  let count = ref(0)
+
+  watch(() => state.x, (newValue, oldValue, onInvalidate) => {
+    console.log('newValue,oldValue: ', newValue, oldValue);
+    // 第一次改变的时候不会触发注册的函数
+    onInvalidate(() => {
+      console.log('onInvalidate');
+    })
+  }, { immediate: true })
+
+  setTimeout(() => {
+    state.x = 200
+    // count.value = 200
+  }, 1000)
 </script>
 
 </html>
