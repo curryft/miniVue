@@ -24,31 +24,32 @@
 
 <!-- 测试computed -->
 <script>
-      // let state = reactive({
-      //   x: 100
-      // })
-      // const com1 = computed(()=>{
-      //   return state.x;
-      // })
+      let state = reactive({
+        x: 100
+      })
+      const com1 = computed(()=>{
+        return state.x;
+      })
 
-      // let renderEffect = new ReactiveEffect(render);
+      let renderEffect = new ReactiveEffect(render);
 
-      // // 组件渲染函数
-      // function render() {
-      //   // 设置当前激活的为渲染函数
-      //   activeEffect = renderEffect
-      //   console.log('com1: ', com1.value);
-      //   // let testId = document.getElementById('testComputed')
-      //   // testId.innerText = com1.value
-      // }
+      // 组件渲染函数
+      function render() {
+        // 设置当前激活的为渲染函数
+        activeEffect = renderEffect
+        console.log('com1: ', state.x);
+        // console.log('com1: ', com1.value);
+        // let testId = document.getElementById('testComputed')
+        // testId.innerText = com1.value
+      }
 
 
 
-      // watchEffect(render)
+      watchEffect(render)
 
-      // setTimeout(() => {
-      //   state.x = 200
-      // }, 1000)
+      setTimeout(() => {
+        state.x = 200
+      }, 1000)
 
 </script>
 <!-- 测试ref -->
@@ -74,24 +75,24 @@
 
 <!-- 测试watcher -->
 <script>
-  let state = reactive({
-    x: 100
-  })
+  // let state = reactive({
+  //   x: 100
+  // })
 
-  let count = ref(0)
+  // let count = ref(0)
 
-  watch(() => state.x, (newValue, oldValue, onInvalidate) => {
-    console.log('newValue,oldValue: ', newValue, oldValue);
-    // 第一次改变的时候不会触发注册的函数
-    onInvalidate(() => {
-      console.log('onInvalidate');
-    })
-  }, { immediate: true })
+  // watch(() => state.x, (newValue, oldValue, onInvalidate) => {
+  //   console.log('newValue,oldValue: ', newValue, oldValue);
+  //   // 第一次改变的时候不会触发注册的函数
+  //   onInvalidate(() => {
+  //     console.log('onInvalidate');
+  //   })
+  // }, { immediate: true })
 
-  setTimeout(() => {
-    state.x = 200
-    // count.value = 200
-  }, 1000)
+  // setTimeout(() => {
+  //   state.x = 200
+  //   // count.value = 200
+  // }, 1000)
 </script>
 
 </html>

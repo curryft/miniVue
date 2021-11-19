@@ -122,9 +122,3 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
         triggerEffects(createDep(effects), eventInfo);
     }
 }
-
-function watchEffect(cb) {
-    let renderEffect = new ReactiveEffect(cb);
-    activeEffect = renderEffect
-    renderEffect.run()
-}
